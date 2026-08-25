@@ -4,6 +4,7 @@ let num = document.querySelector(".input-area");
 let equalBtn = document.querySelector(".equal");
 let DelBtn = document.querySelector(".del");
 let clrBtn = document.querySelector(".clear");
+let justCalculated = false;
 
 function clickBtn(){
     btns.forEach((btn)=>{
@@ -11,6 +12,10 @@ function clickBtn(){
         if(btn.classList.contains("equal")||btn.classList.contains("del") || btn.classList.contains("clear") ){
            console.log("it should not be in input area");
         }else{
+            if (justCalculated) {
+            num.value = "";
+            justCalculated = false;
+            }
             num.value += btn.innerText;
         }
     }
@@ -18,7 +23,7 @@ function clickBtn(){
 
 clickBtn();
 
-let expression = num.value;6
+let expression = num.value;
 
 //Method chaining
 function calculate(expression){
@@ -71,7 +76,11 @@ function calculate(expression){
 
 
 equalBtn.addEventListener("click",()=>{
-    num.value = calculate(num.value);
+    let expression = num.value;
+    let result = calculate(expression);
+
+    num.value = expression + " = " + result;
+    justCalculated = true;
 });
 
 //clear button 
